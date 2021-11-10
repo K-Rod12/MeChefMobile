@@ -1,2 +1,0 @@
-# MeChefMobile
-Large Project 
