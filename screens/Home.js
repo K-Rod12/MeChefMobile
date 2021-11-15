@@ -3,13 +3,14 @@ import Navigation from '../App';
 import React from 'react';
 import {View, Text, Button, StyleSheet, Image, ImageBackground, ImageBackgroundBase} from 'react-native';
 import colors from '../assets/colors/colors'
-import { FlatList, ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { FlatList, ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import recipesData from '../data/recipeData';
 import styles from '../assets/styles';
 
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
 
@@ -27,8 +28,11 @@ const Home = ({navigation}) => {
                 style={styles.recipeItem}
                 imageStyle={styles.recipeItemImage}
                 >
-                {/* <Image source={require('../images/chicken.jpg')}/> */}
-                <Text style={styles.recipeItemTitle}>{item.title}</Text>
+                
+                    <View style={{position: 'absolute', bottom: 10, backgroundColor: colors.pink}}>
+                        <Text style={styles.recipeItemTitle}>{item.title}</Text>
+                    </View>
+
 
                 </ImageBackground>
 

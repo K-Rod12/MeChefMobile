@@ -2,7 +2,7 @@ const recipeData = [
     {
         id: 'recipe-1',
         title: 'Chicken Breast',
-        //image: require('../images/chicken.jpg'),
+        image: require('../images/chicken.jpg'),
     }
 ]
 
