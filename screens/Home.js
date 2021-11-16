@@ -7,6 +7,7 @@ import { FlatList, ScrollView, TouchableHighlight, TouchableOpacity } from 'reac
 import { SafeAreaView } from 'react-native-safe-area-context';
 import recipesData from '../data/recipeData';
 import styles from '../assets/styles';
+import BlurOverlay from 'react-native-blur-overlay';
 
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -21,7 +22,7 @@ const Home = ({navigation}) => {
         
         return(
 
-            <TouchableOpacity> 
+            <TouchableOpacity onPress={() => props.navigation.navigate('Recipe', item)} > 
             
                 <ImageBackground
                 source ={item.image}
@@ -29,9 +30,10 @@ const Home = ({navigation}) => {
                 imageStyle={styles.recipeItemImage}
                 >
                 
-                    <View style={{position: 'absolute', bottom: 10, backgroundColor: colors.pink}}>
-                        <Text style={styles.recipeItemTitle}>{item.title}</Text>
+                    <View style={styles.recipeTitleUnderlay}>
                     </View>
+
+                    <Text style={styles.recipeItemTitle}>{item.title}</Text>
 
 
                 </ImageBackground>
@@ -60,7 +62,7 @@ const Home = ({navigation}) => {
                 {/* Recipes */}
                 <SafeAreaView>
                     <View> 
-                        <Text style={styles.titleText} onPress={() =>navigation.navigate('Pantry')} >Your Recipes <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/> </Text>
+                        <Text style={styles.titleText} onPress={() => navigation.navigate('Recipes', item)}> Your Recipes <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/> </Text>
                     </View>
 
                     <View styles={styles.recipesWrapper}>
@@ -94,20 +96,5 @@ const Home = ({navigation}) => {
     );
 
 };
-
-// const styles = StyleSheet.create({
-//     titleText: {
-//         fontSize: 32,
-//         fontWeight: "bold"
-//     },
-//     titleIcon: {
-//         fontSize: 24,
-//         fontWeight: "bold"
-//     },
-//     container: {
-//         flex: 1,
-//         color: colors
-//     }
-// })
 
 export default Home;

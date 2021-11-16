@@ -1,6 +1,5 @@
 import {StyleSheet} from 'react-native';
-import { colors } from 'react-native-elements';
-
+import colors from './colors/colors'
 
 const styles = StyleSheet.create({
     titleText: {
@@ -11,6 +10,17 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: "bold"
     },
+    recipeTitleUnderlay:{
+        position: 'absolute',
+        opacity: 0.5,
+        //blurRadius: 0.1,
+        height: 50,
+        width:170,
+        bottom: 0,
+        backgroundColor: colors.pink, 
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20
+    }, 
     recipeItemTitle:{
         fontSize: 20,
         color: colors.white,
@@ -22,10 +32,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 15,
         marginLeft: 10,
-        marginRight: 20,
+        marginRight: 10,
     },
     recipeItemImage: {
         borderRadius: 20,
+    },
+    navigationTab:{
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
     },
     container: {
         flex: 1,

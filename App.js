@@ -4,6 +4,8 @@ import Home from './screens/Home';
 import Discover from './screens/Discover';
 import Profile from './screens/Profile';
 import Pantry from './screens/Pantry';
+import Recipe from './screens/Recipe';
+import Recipes from './screens/Recipes';
 import colors from './assets/colors/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -24,7 +26,7 @@ const TabNavigator = () => {
     <Tab.Navigator
       tabBarOptions={{
         borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
+        borderTopRightRadius: 20, 
         activeTintColor: colors.pink,
         inactiveTintColor: colors.gray,
         showLabel: false,
@@ -94,6 +96,14 @@ const App = () => {
         <Stack.Screen
           name="Pantry"
           component={Pantry}
+        />
+        <Stack.Screen
+          name="Recipe"
+          component={Recipe}
+        />
+        <Stack.Screen
+          name="Recipes"
+          component={Recipes}
         />
       </Stack.Navigator>
     </NavigationContainer>
