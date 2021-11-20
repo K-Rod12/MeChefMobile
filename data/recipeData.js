@@ -6,14 +6,25 @@ const recipeData = [
     },
     {
         id: 'recipe-2',
-        title: 'Spaghetti',
+        title: "Spaghetti",
         image: require('../images/spaghetti.jpg'),
     },
     {
         id: 'recipe-3',
-        title: 'Oatmeal',
+        title: "Blueberry Oatmeal",
         image: require('../images/oatmeal.jpg')
+    },
+    {
+        id: 'recipe-4',
+        title: "Chopped Salad",
+        image: require('../images/salad.jpg')
+    },
+    {
+        id: 'recipe-5',
+        title: "Chocolate Chip Cookies",
+        image: require('../images/cookies.jpg')
     }
+
 ]
 
 export default recipeData;

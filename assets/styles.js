@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 20
     }, 
     recipeItemTitle:{
-        fontSize: 20,
+        fontWeight: 'bold',
+        fontSize: 16,
         color: colors.white,
     },
     recipeItem: {
@@ -31,8 +32,18 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         paddingHorizontal: 10,
         paddingVertical: 15,
+        marginTop: 10,
         marginLeft: 10,
-        marginRight: 10,
+        marginRight: 6,
+        marginBottom: 10,
+    },
+    recipesWrapper:{
+        backgroundColor: colors.pink,
+        marginTop: 10 
+    },
+    recipesScreenWrapper:{
+        backgroundColor: colors.pink,
+        marginBottom: 0
     },
     recipeItemImage: {
         borderRadius: 20,

@@ -1,11 +1,15 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+
 import Home from './screens/Home';
-import Discover from './screens/Discover';
+import Explore from './screens/Explore';
 import Profile from './screens/Profile';
 import Pantry from './screens/Pantry';
 import Recipe from './screens/Recipe';
 import Recipes from './screens/Recipes';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
+
 import colors from './assets/colors/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -20,6 +24,33 @@ MaterialCommunityIcons.loadFont();
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+const Auth = () => {
+  // Stack Navigator for Login and Sign up Screen
+  return (
+    <Stack.Navigator initialRouteName="LoginScreen">
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="RegisterScreen"
+        component={RegisterScreen}
+        options={{
+          headerShown: false, //Set Header Title
+        }}
+      />
+      <Stack.Screen
+        name="TabNavigator"
+        component={TabNavigator}
+        options={{
+          headerShown: false, //Set Header Title
+        }}
+        />
+    </Stack.Navigator>
+  );
+};
 
 const TabNavigator = () => {
   return (
@@ -42,8 +73,8 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Discover"
-        component={Discover}
+        name="Explore"
+        component={Explore}
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (
@@ -69,6 +100,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
+        initialRouteName="LoginScreen"
         tabBarOptions={{
           backgroundColor: colors.yellow,
         }}
@@ -76,9 +108,14 @@ const App = () => {
           headerShown: false,
         }}>
         <Stack.Screen
-          name="TabNavigator"
-          component={TabNavigator}
+          name="LoginScreen"
+          component={Auth}
           options={{headerShown: false}}
+          />
+        <Stack.Screen
+            name="TabNavigator"
+            component={TabNavigator}
+            options={{headerShown: false}}
         />
         <Stack.Screen
           name="Home"
@@ -86,8 +123,8 @@ const App = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Discover"
-          component={Discover}
+          name="Explore"
+          component={Explore}
         />
         <Stack.Screen
           name="Profile"
@@ -109,6 +146,23 @@ const App = () => {
     </NavigationContainer>
   );
 };
+
+// const LoginNav = createStackNavigator();
+
+// const Login = () => {
+
+//   <LoginNav.Navigator>
+//     <LoginNav.Screen
+//       name="Login"
+//       component={Login}
+//       options={{
+//         headerShown: false,
+//       }}
+//     >
+//     </LoginNav.Screen>
+//   </LoginNav.Navigator>
+
+// };
 
 const styles = StyleSheet.create({
   tabBar: {

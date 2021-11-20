@@ -12,7 +12,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { NavigationActions } from 'react-navigation';
 // import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
-const Recipe = ({navigation}) => {
+const Recipe = ({route}) => {
 
     return(
         
@@ -23,7 +23,7 @@ const Recipe = ({navigation}) => {
                 <SafeAreaView > 
 
                     {/* <Text style={styles.titleText}> {navigation.getParam('id')} </Text> */}
-                <Text style={styles.titleText}> {navigation.getParam('title')} </Text>
+                <Text style={styles.titleText}> {route.params.title} </Text>
                     
                 </SafeAreaView>
 

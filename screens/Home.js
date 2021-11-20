@@ -6,8 +6,9 @@ import colors from '../assets/colors/colors'
 import { FlatList, ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import recipesData from '../data/recipeData';
+import exploreData from '../data/exploreData';
 import styles from '../assets/styles';
-import BlurOverlay from 'react-native-blur-overlay';
+// import renderRecipes from '../data/renderRecipes';
 
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -17,13 +18,12 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
 const Home = ({navigation}) => {
-    
-    const renderRecipes = ({item}) => {
-        
-        return(
 
-            <TouchableOpacity onPress={() => props.navigation.navigate('Recipe', item)} > 
-            
+    const renderRecipes = ({item}) => {
+
+        return(
+    
+            <TouchableOpacity onPress={() => navigation.navigate('Recipe', item) } > 
                 <ImageBackground
                 source ={item.image}
                 style={styles.recipeItem}
@@ -32,16 +32,14 @@ const Home = ({navigation}) => {
                 
                     <View style={styles.recipeTitleUnderlay}>
                     </View>
-
+    
                     <Text style={styles.recipeItemTitle}>{item.title}</Text>
-
-
+    
+    
                 </ImageBackground>
-
             </TouchableOpacity>
         )
-            
-    }
+    };
     
     return(
 
@@ -51,45 +49,51 @@ const Home = ({navigation}) => {
             <ScrollView>
 
                 <SafeAreaView>
-                    <View style={styles.menuWrapper}>
+                    <View>
+                        <Text style={styles.titleText}> Your Pantry <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/> </Text>
                     </View>
                 </SafeAreaView>
                 
-                <View>
-                    <Text style={styles.titleText}>Your Pantry <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/> </Text>
-                </View>
+                {/* <SafeAreaView>
+                </SafeAreaView> */}
 
                 {/* Recipes */}
-                <SafeAreaView>
-                    <View> 
-                        <Text style={styles.titleText} onPress={() => navigation.navigate('Recipes', item)}> Your Recipes <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/> </Text>
-                    </View>
 
-                    <View styles={styles.recipesWrapper}>
+                <View> 
+                    <Text style={styles.titleText} onPress={() => navigation.navigate('Recipes')}> Your Recipes <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/> </Text>
+                </View>
+
+                <View styles={styles.recipesWrapper}>
+                    <FlatList
+                        data={recipesData}
+                        renderItem={renderRecipes}
+                        keyExtractor={(item, navigation) => (item.id, navigation.navigate)}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    />
+
+                </View>
+
+
+
+
+                <View> 
+                    <Text style={styles.titleText} onPress={() => navigation.navigate('Explore')} > Explore <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/> </Text>
+                </View>
+
+                <View styles={styles.recipesWrapper}>
                         <FlatList
-                            data={recipesData}
+                            styles={{marginTop: 10}}
+                            data={exploreData}
                             renderItem={renderRecipes}
-                            keyExtractor={(item) => item.id}
+                            keyExtractor={(item, navigation) => (item.id, navigation.navigate)}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                         />
 
-                    </View>
-                    
-                </SafeAreaView>
+                </View>
 
 
-
-                <SafeAreaView>
-                    <View> 
-                        <Text style={styles.titleText} onPress={() =>navigation.navigate('Discover')} >Explore <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/> </Text>
-                    </View>
-                    
-                </SafeAreaView>
-
-
-
-    
             </ScrollView>
         </View>
 
