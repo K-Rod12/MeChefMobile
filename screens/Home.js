@@ -8,6 +8,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import recipesData from '../data/recipeData';
 import exploreData from '../data/exploreData';
 import styles from '../assets/styles';
+import FastImageView from 'react-native-fast-image';
+import pantryData from '../data/pantryData';
+
 // import renderRecipes from '../data/renderRecipes';
 
 import Feather from 'react-native-vector-icons/Feather';
@@ -30,10 +33,12 @@ const Home = ({navigation}) => {
                 imageStyle={styles.recipeItemImage}
                 >
                 
-                    <View style={styles.recipeTitleUnderlay}>
+                    <View style={styles.recipeTitleUnderlay}></View>
+                    
+                    <View>
+                        <Text style={styles.recipeItemTitle}>{item.title}</Text>
                     </View>
     
-                    <Text style={styles.recipeItemTitle}>{item.title}</Text>
     
     
                 </ImageBackground>
@@ -41,6 +46,27 @@ const Home = ({navigation}) => {
         )
     };
     
+    const renderPantry = ({item}) => {
+
+        return(
+            // <Text>{item.title}</Text>
+            <TouchableOpacity style={{
+                backgroundColor: colors.pink,
+                width: 150,
+                height: 40,
+                borderRadius: 20,
+                marginRight: 10,
+                justifyContent: 'center'
+            }}>
+                <Text style={{
+                    textAlign: 'center',
+                    color: colors.white
+                }}>{item.title}</Text>
+            </TouchableOpacity>
+        )
+
+    };
+
     return(
 
         <View style={styles.container}>
@@ -50,14 +76,21 @@ const Home = ({navigation}) => {
 
                 <SafeAreaView>
                     <View>
-                        <Text style={styles.titleText}> Your Pantry <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/> </Text>
+                        <Text style={styles.titleText} onPress={() => navigation.navigate('Pantry')}> Your Pantry <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/> </Text>
                     </View>
+
+                    <FlatList 
+                    data={pantryData}
+                    renderItem={renderPantry}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    style={{
+                        marginLeft: 10,
+                        top: 15
+                    }}> 
+                    </FlatList>
                 </SafeAreaView>
                 
-                {/* <SafeAreaView>
-                </SafeAreaView> */}
-
-                {/* Recipes */}
 
                 <View> 
                     <Text style={styles.titleText} onPress={() => navigation.navigate('Recipes')}> Your Recipes <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/> </Text>

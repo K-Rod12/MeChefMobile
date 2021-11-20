@@ -16,7 +16,7 @@ const exploreData = [
     },
     {
         id: 'recipe-4',
-        title: "Potluck Chopped Salad",
+        title: "Chopped Salad",
         image: require('../images/salad.jpg')
     },
     {

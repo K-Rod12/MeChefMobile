@@ -18,6 +18,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import WelcomeScreen from './screens/WelcomeScreen';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
@@ -28,7 +29,12 @@ const Tab = createBottomTabNavigator();
 const Auth = () => {
   // Stack Navigator for Login and Sign up Screen
   return (
-    <Stack.Navigator initialRouteName="LoginScreen">
+    <Stack.Navigator initialRouteName="WelcomeScreen">
+      <Stack.Screen
+        name="WelcomeScreen"
+        component={WelcomeScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}
@@ -100,7 +106,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="LoginScreen"
+        initialRouteName="WelcomeScreen"
         tabBarOptions={{
           backgroundColor: colors.yellow,
         }}
@@ -108,10 +114,15 @@ const App = () => {
           headerShown: false,
         }}>
         <Stack.Screen
-          name="LoginScreen"
+          name="WelcomeScreen"
           component={Auth}
           options={{headerShown: false}}
           />
+        {/* <Stack.Screen
+          name="LoginScreen"
+          component={Auth}
+          options={{headerShown: false}}
+          /> */}
         <Stack.Screen
             name="TabNavigator"
             component={TabNavigator}

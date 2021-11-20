@@ -45,6 +45,10 @@ const styles = StyleSheet.create({
         backgroundColor: colors.pink,
         marginBottom: 0
     },
+    recipePageImage:{
+        width: 500,
+        height: 400,
+    },  
     recipeItemImage: {
         borderRadius: 20,
     },
@@ -52,8 +56,15 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
     },
+    meChefLogo: {
+        // position: 'absolute',
+        // top: 125,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center'
+    },
     container: {
-        flex: 1,
+        flex: 3,
         //color: colors
     }
 })

@@ -5,26 +5,58 @@ import {View, Text, Button, StyleSheet, ImageBackground, ImageBackgroundBase} fr
 import colors from '../assets/colors/colors'
 import { FlatList, ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import recipesData from '../data/recipeData';
+import exploreData from '../data/exploreData';
 import styles from '../assets/styles';
+// import renderRecipes from '../data/renderRecipes';
 
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-const Explore = () => {
+
+const Explore = ({navigation, routes}) => {
+
+    const renderRecipes = ({item}) => {
+
+        return(
+    
+            <TouchableOpacity onPress={() => navigation.navigate('Recipe', item) } > 
+                <ImageBackground
+                source ={item.image}
+                style={styles.recipeItem}
+                imageStyle={styles.recipeItemImage}
+                >
+                
+                    <View style={styles.recipeTitleUnderlay}>
+                    </View>
+    
+                    <Text style={styles.recipeItemTitle}>{item.title}</Text>
+    
+    
+                </ImageBackground>
+            </TouchableOpacity>
+        )
+    };
 
     return(
-
-        
         
         <View>
 
             <View style={{marginTop:40, marginBottom:10}}>
-                <Text style={{fontWeight: 'bold', fontSize: 32}}> Explore Page</Text>
+                <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 32}}> Explore</Text>
             </View>
 
             <ScrollView> 
 
-                
+
+                <View styles={styles.recipesScreenWrapper}>
+                        <FlatList 
+                            numColumns='2'
+                            data={exploreData}
+                            renderItem={renderRecipes}
+                            keyExtractor={(item) => item.id}
+                            showsHorizontalScrollIndicator={false}
+                        />
+
+                </View>
 
             </ScrollView>
         </View>
