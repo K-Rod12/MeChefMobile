@@ -12,6 +12,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { NavigationActions } from 'react-navigation';
 import { BackgroundImage } from 'react-native-elements/dist/config';
+import { color } from 'react-native-reanimated';
 
 // import { Colors } from 'react-native/Libraries/NewAppScreen';
 // import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
@@ -20,35 +21,33 @@ const Recipe = ({route}) => {
     return(
         
         <View>
+            <BackgroundImage
+            source={route.params.image}
+            style={styles.recipePageImage}
+            >
+            </BackgroundImage>
 
-            <ScrollView style={{
+            <View style={{
+                // marginTop:20,
+                borderRadius:10,
+                backgroundColor: color.white,
                 height: '100%'
             }}> 
 
-                <BackgroundImage
-                source={route.params.image}
-                style={styles.recipePageImage}
-                >
-                </BackgroundImage>
 
-                <TouchableHighlight
+                <View
                 style={{
                     bottom: 10,
                     height: '100%',
                     borderRadius: 10,
                     backgroundColor: colors.white,
                 }}>
-                    <TouchableOpacity style={{
-                        color: colors.white, 
-                        borderRadius: 50,
-                    }}>
-                        <Text style={styles.titleText}
-                        >{route.params.title} </Text>
-                    </TouchableOpacity>
-                </TouchableHighlight>
+                    <Text style={styles.titleText}
+                    > {route.params.title} </Text>
+                </View>
 
 
-            </ScrollView>
+            </View>
         </View>
 
     );

@@ -94,7 +94,7 @@ const WelcomeScreen = ({navigation}) => {
                     </View>
 
                     <TouchableOpacity // Create Account
-                        onPress = {() => navigation.navigate('TabNavigator')}
+                        onPress = {() => navigation.navigate('RegisterScreen')}
                         underlayColor = "#FFB9B9"
                         style = {
                             {

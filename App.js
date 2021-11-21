@@ -15,10 +15,11 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, validatePathConfig} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import WelcomeScreen from './screens/WelcomeScreen';
+import { TransitionSpecs } from '@react-navigation/stack';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
@@ -102,6 +103,30 @@ const TabNavigator = () => {
   );
 };
 
+const config = {
+  animation: 'time',
+  config: {
+    stiffness: 1000,
+    damping: 50,
+    mass: 3,
+    overshootClamping: false,
+    restDisplacementThreshold: 0.01,
+    restSpeedThreshold: 0.01,
+  },
+};
+
+const closeConfig = {
+  animation: 'spring',
+  config: {
+    stiffness: 1000,
+    damping: 500,
+    mass: 3,
+    overshootClamping: true,
+    restDisplacementThreshold: 1.,
+    restSpeedThreshold: 1.,
+  },
+};
+
 const App = () => {
   return (
     <NavigationContainer>
@@ -126,7 +151,23 @@ const App = () => {
         <Stack.Screen
             name="TabNavigator"
             component={TabNavigator}
-            options={{headerShown: false}}
+            options={{
+              headerShown: false,
+              gestureEnabled: true,
+              gestureDirection: "horizontal",
+              transitionSpec:{
+                open: TransitionSpecs.RevealFromBottomAndroid,
+                close: TransitionSpecs.RevealFromBottomAndroid
+              }
+            }}
+            // screenOptions={{
+            //   gestureEnabled: true,
+            //   gestureDirection: "vertical",
+            //   transitionSpec:{
+            //     open: config,
+            //     close: config
+            //   }
+            // }}
         />
         <Stack.Screen
           name="Home"
@@ -148,6 +189,21 @@ const App = () => {
         <Stack.Screen
           name="Recipe"
           component={Recipe}
+          options={{
+            headerShown: false,
+            gestureEnabled: true,
+            // gestureDirection: "horizontal",
+            cardStyle: true,
+            presentation: 'modal',
+            gestureDirection: "vertical",
+            transitionSpec:{
+              // open: TransitionSpecs.RevealFromBottomAndroidSpec,
+              // close: TransitionSpecs.RevealFromBottomAndroidSpec
+              open: config,
+              close: closeConfig
+            }
+          }}
+
         />
         <Stack.Screen
           name="Recipes"
