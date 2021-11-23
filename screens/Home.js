@@ -74,9 +74,15 @@ const Home = ({navigation}) => {
             {/*Header */}
             <ScrollView>
 
-                <SafeAreaView>
-                    <View>
-                        <Text style={styles.titleText} onPress={() => navigation.navigate('Pantry')}> Your Pantry <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/> </Text>
+                <View style={{
+                    marginTop: 40
+                }}
+                >
+                    <View style={{
+                        flexDirection: 'row'
+                    }}>
+                        <Text style={styles.titleText} onPress={() => navigation.navigate('Pantry')}> Your Pantry </Text>
+                        <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/>
                     </View>
 
                     <FlatList 
@@ -85,16 +91,21 @@ const Home = ({navigation}) => {
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     style={{
-                        marginLeft: 10,
-                        top: 15
+                        marginLeft: 5,
+                        marginTop: 10,
+                        marginBottom: 10
                     }}> 
                     </FlatList>
-                </SafeAreaView>
+                </View>
                 
 
-                <View> 
-                    <Text style={styles.titleText} onPress={() => navigation.navigate('Recipes')}> Your Recipes <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/> </Text>
-                </View>
+                <View style={{
+                        flexDirection: 'row'
+                    }}>
+                        <Text style={styles.titleText} onPress={() => navigation.navigate('Recipes')}> Your Recipes </Text>
+                        <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/>
+                    </View>
+
 
                 <View styles={styles.recipesWrapper}>
                     <FlatList
@@ -110,9 +121,13 @@ const Home = ({navigation}) => {
 
 
 
-                <View> 
-                    <Text style={styles.titleText} onPress={() => navigation.navigate('Explore')} > Explore <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/> </Text>
+                <View style={{
+                        flexDirection: 'row'
+                    }}>
+                        <Text style={styles.titleText} onPress={() => navigation.navigate('Explore')}> Explore </Text>
+                        <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/>
                 </View>
+
 
                 <View styles={styles.recipesWrapper}>
                         <FlatList

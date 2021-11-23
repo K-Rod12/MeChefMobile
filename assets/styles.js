@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     titleIcon: {
+        marginTop: 8,
         fontSize: 24,
         fontWeight: "bold"
     },

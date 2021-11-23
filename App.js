@@ -9,6 +9,9 @@ import Recipe from './screens/Recipe';
 import Recipes from './screens/Recipes';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import PersonalInformation from './screens/PersonalInformation';
+import EmailVerification from './screens/EmailVerification';
+import ResetPassword from './screens/ResetPassword';
 
 import colors from './assets/colors/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -63,8 +66,6 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20, 
         activeTintColor: colors.pink,
         inactiveTintColor: colors.gray,
         showLabel: false,
@@ -128,13 +129,11 @@ const closeConfig = {
 };
 
 const App = () => {
+
   return (
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="WelcomeScreen"
-        tabBarOptions={{
-          backgroundColor: colors.yellow,
-        }}
         screenOptions={{
           headerShown: false,
         }}>
@@ -208,6 +207,14 @@ const App = () => {
         <Stack.Screen
           name="Recipes"
           component={Recipes}
+        />
+        <Stack.Screen
+          name="PersonalInformation"
+          component={PersonalInformation}
+        />
+        <Stack.Screen
+          name="ResetPassword"
+          component={ResetPassword}
         />
       </Stack.Navigator>
     </NavigationContainer>

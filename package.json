@@ -26,6 +26,7 @@
     "react-native-elements": "^3.4.2",
     "react-native-fast-image": "^8.5.11",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-passmeter": "^0.0.5",
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-safe-area-view": "^1.1.1",
