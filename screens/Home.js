@@ -20,8 +20,9 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
 
-const Home = ({navigation}) => {
-
+const Home = ({navigation, route}) => {
+    const user = route.params;
+    //console.log(user.user[0].Pantry);
     const renderRecipes = ({item}) => {
 
         return(
@@ -61,7 +62,7 @@ const Home = ({navigation}) => {
                 <Text style={{
                     textAlign: 'center',
                     color: colors.white
-                }}>{item.title}</Text>
+                }}>{item.Name}</Text>
             </TouchableOpacity>
         )
 
@@ -81,12 +82,12 @@ const Home = ({navigation}) => {
                     <View style={{
                         flexDirection: 'row'
                     }}>
-                        <Text style={styles.titleText} onPress={() => navigation.navigate('Pantry')}> Your Pantry </Text>
+                        <Text style={styles.titleText} onPress={() => navigation.navigate('Pantry', user)}> Your Pantry </Text>
                         <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/>
                     </View>
 
                     <FlatList 
-                    data={pantryData}
+                    data={user[0].Pantry.Ingredient_List}
                     renderItem={renderPantry}
                     horizontal
                     showsHorizontalScrollIndicator={false}

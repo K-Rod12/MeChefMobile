@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import Navigation from '../App';
-import React from 'react';
+import React, {useState} from 'react';
 import {Keyboard, View, Text, Button, StyleSheet, Image, ImageBackground, ImageBackgroundBase, Alert, TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
 import colors from '../assets/colors/colors'
 import { FlatList, ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
@@ -13,9 +13,50 @@ import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import {SearchBar} from 'react-native-elements';
+import LoginScreen from './LoginScreen';
 
-const Pantry = ({navigation}) => {
-
+const searchForIngURL = "http://mechef.zapto.org/api/searchForIngredient";
+const addToPantryURL = "http://mechef.zapto.org/api/addPantry";
+const Pantry = ({navigation, props, route}) => {
+    const [ingredientToAdd, setIngredientToAdd] = useState('');
+    const user = route.params;
+    const doSearch = () => {
+        //POST json
+        var dataToSend = {search: ingredientToAdd, quantity: '1'};
+        //POST request
+        fetch(searchForIngURL, {
+          method: 'POST', //Request Type
+          body: JSON.stringify(dataToSend), //post body
+          headers: {
+            //Header Defination
+            'Content-Type': 
+              'application/json',
+          },
+        })
+          .then((response) => response.json())
+          //If response is in json then in success
+          .then((responseJson) => {
+            //   if (!responseJson.error)
+            //   {
+            //     user = responseJson;
+            //         navigation.navigate('TabNavigator', {
+            //             screen: 'Home',
+            //             params: user
+            //         });
+            //   }
+              //alert(JSON.stringify(responseJson));
+              console.log(responseJson);
+              //console.log(user[0].Pantry.Ingredient_List[0]); // this line works sometimes
+              //console.log(user.Pantry[0].Ingredient_List[0]);
+              // navigation.navigate('TabNavigator');
+          })
+          //If response is not in json then in error
+          .catch((error) => {
+            //alert(JSON.stringify(error));
+            console.error(error);
+           // navigation.navigate('LoginScreen');
+          });
+    };
     const renderPantry = ({item}) => {
 
         return(
@@ -33,7 +74,7 @@ const Pantry = ({navigation}) => {
                 <Text style={{
                     textAlign: 'center',
                     color: colors.white
-                }}>{item.title}</Text>
+                }}>{item.Name}</Text>
             </TouchableOpacity>
         )
 
@@ -91,14 +132,14 @@ const Pantry = ({navigation}) => {
                     lightTheme={true}
                     round
                     searchIcon={{ size: 24 }}
-                    onChangeText={(text) => searchFilterFunction(text)}
+                    onChangeText={(text) => setIngredientToAdd(ingredientToAdd)}
                     onClear={(text) => searchFilterFunction('')}
                     placeholder="Search for item..."
                     // value={search}
                     ></SearchBar>
 
                     <TouchableOpacity
-                        onPress = {() => navigation.navigate('Pantry')}
+                        onPress = {searchForIngURL}
                         // underlayColor = "#FFB9B9"
                         style = {
                             {
@@ -135,7 +176,7 @@ const Pantry = ({navigation}) => {
                 >
 
                     <FlatList 
-                        data={pantryData}
+                        data={user[0].Pantry.Ingredient_List}
                         renderItem={renderPantry}
                         //horizontal={false}
                         numColumns={2}

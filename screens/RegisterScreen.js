@@ -12,13 +12,49 @@ import PassMeter from 'react-native-passmeter';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { add } from 'react-native-reanimated';
 
+const url = 'http://mechef.zapto.org/api/addUser'
 const MAX_LEN = 15,
   MIN_LEN = 6,
   PASS_LABELS = ["Too Short", "Weak", "Normal", "Strong", "Secure"];
 
 const RegisterScreen = ({navigation}) => {
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+
+    const addUser = () => {
+        //POST json
+        var dataToSend = {login: username, password: password, email: email, firstName: firstName, lastName: lastName};
+        //POST request
+        fetch(url, {
+          method: 'POST', //Request Type
+          body: JSON.stringify(dataToSend), //post body
+          headers: {
+            //Header Defination
+            'Content-Type': 
+              'application/json',
+          },
+        })
+          .then((response) => response.json())
+          //If response is in json then in success
+          .then((responseJson) => {
+            //alert(JSON.stringify(responseJson));
+            //console.log(responseJson);
+            if (!responseJson.error)
+            {
+                navigation.navigate('LoginScreen');
+            }
+          })
+          //If response is not in json then in error
+          .catch((error) => {
+            //alert(JSON.stringify(error));
+            console.error(error);
+          });
+      };
     return(
         
         <View>
@@ -65,6 +101,7 @@ const RegisterScreen = ({navigation}) => {
                                 // position: 'absolute'
                             }}
                             placeholder = "First Name"
+                            onChangeText = {firstName => setFirstName(firstName)}
                             //value = {text}
                             >
                         </TextInput>
@@ -82,6 +119,7 @@ const RegisterScreen = ({navigation}) => {
                                 // position: 'absolute'
                             }}
                             placeholder = "Last Name"
+                            onChangeText = {lastName => setLastName(lastName)}
                             //value = {text}
                             >
                         </TextInput>
@@ -99,6 +137,7 @@ const RegisterScreen = ({navigation}) => {
                                 // position: 'absolute'
                             }}
                             placeholder = "Email Address"
+                            onChangeText = {email => setEmail(email)}
                             //value = {text}
                             >
                         </TextInput>
@@ -116,6 +155,7 @@ const RegisterScreen = ({navigation}) => {
                                 // position: 'absolute'
                             }}
                             placeholder = "Username"
+                            onChangeText = {username => setUsername(username)}
                             //value = {text}
                             >
                         </TextInput>
@@ -167,7 +207,7 @@ const RegisterScreen = ({navigation}) => {
                         >Passwords must be between 4-12 characters long and contain at least 1 lowercase, uppercase, and number.</Text> */}
                         
                         <TouchableOpacity // Login
-                            onPress = {() => navigation.navigate('LoginScreen')}
+                            onPress = {addUser}
                             // underlayColor = "#FFB9B9"
                             style = {
                                 {

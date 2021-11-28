@@ -12,6 +12,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import PersonalInformation from './screens/PersonalInformation';
 import EmailVerification from './screens/EmailVerification';
 import ResetPassword from './screens/ResetPassword';
+import AddRecipe from './screens/AddRecipe';
 
 import colors from './assets/colors/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -26,6 +27,7 @@ import { TransitionSpecs } from '@react-navigation/stack';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -52,6 +54,20 @@ const Auth = () => {
         }}
       />
       <Stack.Screen
+        name="EmailVerification"
+        component={EmailVerification}
+        options={{
+          headerShown: false, //Set Header Title
+        }}
+      />
+      <Stack.Screen
+        name="AddRecipe"
+        component={AddRecipe}
+        options={{
+          headerShown: false, //Set Header Title
+        }}
+      />
+      <Stack.Screen
         name="TabNavigator"
         component={TabNavigator}
         options={{
@@ -62,7 +78,8 @@ const Auth = () => {
   );
 };
 
-const TabNavigator = () => {
+const TabNavigator = ({route}) => {
+  const user = route.params;
   return (
     <Tab.Navigator
       tabBarOptions={{

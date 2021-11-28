@@ -48,6 +48,15 @@ const Profile = ({navigation}) => {
             </View>
             <Divider orientation="horizontal"/>
             <View style={{width: Dimensions.get('window').width, height: 50, backgroundColor:'white'}}>
+                <TouchableOpacity style={{height: 50}} onPress = {() => navigation.navigate('AddRecipe')}>
+                    <Text style ={{fontWeight: 'bold', fontSize: 24, marginLeft:20, marginTop: 10}}>
+                        Add Recipe
+                    </Text>
+                </TouchableOpacity>
+                
+            </View>
+            <Divider orientation="horizontal"/>
+            <View style={{width: Dimensions.get('window').width, height: 50, backgroundColor:'white'}}>
                 <TouchableOpacity style={{height: 50}} onPress = {() => navigation.navigate('LoginScreen')}>
                     <Text style ={{fontWeight: 'bold', fontSize: 24, marginLeft:20, marginTop: 10}}>
                         Logout
