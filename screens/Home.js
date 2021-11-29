@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import Navigation from '../App';
-import React from 'react';
+import React, {useState, useEffect, Component} from 'react';
 import {View, Text, Button, StyleSheet, Image, ImageBackground, ImageBackgroundBase} from 'react-native';
 import colors from '../assets/colors/colors'
 import { FlatList, ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
@@ -10,20 +10,108 @@ import exploreData from '../data/exploreData';
 import styles from '../assets/styles';
 import FastImageView from 'react-native-fast-image';
 import pantryData from '../data/pantryData';
-
+import BlurOverlay,{closeOverlay,openOverlay} from 'react-native-blur-overlay'
 // import renderRecipes from '../data/renderRecipes';
 
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-
-
+const log = console.log;
 
 const Home = ({navigation, route}) => {
     const user = route.params;
-    //console.log(user.user[0].Pantry);
+    var count = Object.keys(user[0].Pantry.Ingredient_List).length;
+    const key = '&app_id=b3ff7aac&app_key=5ae74af09f6c48e7e1f444dcd524091a&imageSize=LARGE&time=1-50&random=false'
+    var [recipes, setRecipes] = useState([]);
+
+    
+    // const testURL = 'https://api.spoonacular.com/recipes/findByIngredients?ingredients=apples,+flour,+sugar&number=2&apiKey=5e11b97982854510823bc74ed70c95ba';
+    // var testURL = 'https://api.edamam.com/api/recipes/v2?type=public&q=chickens&app_id=b3ff7aac&app_key=5ae74af09f6c48e7e1f444dcd524091a&health=alcohol-cocktail&imageSize=REGULAR&random=false';
+    var URL = 'https://api.edamam.com/api/recipes/v2?type=public&q='; //Bananas%20Apple&app_id=b3ff7aac&app_key=5ae74af09f6c48e7e1f444dcd524091a&health=alcohol-cocktail&imageSize=REGULAR&random=false';
+    
+    for(var i = 0; i < count; i++ ){
+        if(i < count - 1 ){
+            URL += user[0].Pantry.Ingredient_List[i].Name + '%20';
+        }else{
+            URL += user[0].Pantry.Ingredient_List[i].Name;
+        }
+    }
+    
+    URL += key;
+    
+    log(URL);
+
+    useEffect(() => {
+        fetch(URL, {
+            method: 'GET', //Request Type
+            // body: JSON.stringify(dataToSend), //post body
+            headers: {
+            //Header Defination
+            'Accept': 
+                'application/json',
+            },
+        })
+            .then((response) => response.json())
+            //If response is in json then in success
+            .then((responseJson) => {
+                if (!responseJson.error)
+                {
+                    // recipes = setRecipes(responseJson);
+                    recipes = setRecipes(responseJson);
+                    log('\n\nRecipes\n\n')
+                    // log(recipes)
+                    // log(recipes.hits[0].recipe.label);
+
+
+                    //   navigation.navigate('TabNavigator', {
+                    //       screen: 'Home',
+                    //       params: user
+                    //   });
+                }
+            })
+            //If response is not in json then in error
+            .catch((error) => {
+            //alert(JSON.stringify(error));
+            console.error(error);
+            // navigation.navigate('LoginScreen');
+            });
+    }, [])
+
+    // getRecipe();
+
     const renderRecipes = ({item}) => {
+
+        //log(item)
+
+        return(
+    
+            <TouchableOpacity onPress={() => navigation.navigate('Recipe', item) } > 
+                <ImageBackground
+                source ={{uri: item.recipe.image}}
+                style={styles.recipeItem}
+                imageStyle={styles.recipeItemImage}
+                >
+
+                <BlurOverlay
+                    style={styles.recipeTitleBlur}
+                    customStyles={{alignItems: 'center', justifyContent: 'center'}}
+                    blurStyle="dark"
+                />                
+                    <View style={styles.recipeTitleUnderlay}></View>
+                    
+                    <View>
+                        <Text style={styles.recipeItemTitle} numberOfLines={2} >{item.recipe.label}</Text>
+                    </View>
+    
+                </ImageBackground>
+            </TouchableOpacity>
+        )
+    };
+
+    const renderExplore = ({item}) => {
+
+        //log(item)
 
         return(
     
@@ -33,14 +121,17 @@ const Home = ({navigation, route}) => {
                 style={styles.recipeItem}
                 imageStyle={styles.recipeItemImage}
                 >
-                
+
+                <BlurOverlay
+                    style={styles.recipeTitleBlur}
+                    customStyles={{alignItems: 'center', justifyContent: 'center'}}
+                    blurStyle="dark"
+                />                
                     <View style={styles.recipeTitleUnderlay}></View>
                     
                     <View>
                         <Text style={styles.recipeItemTitle}>{item.title}</Text>
                     </View>
-    
-    
     
                 </ImageBackground>
             </TouchableOpacity>
@@ -67,6 +158,12 @@ const Home = ({navigation, route}) => {
         )
 
     };
+
+    // for(var i = 0; i < 10; i++){
+    //     log(recipes.hits[i].recipe.label);
+    // }
+
+    // log(recipes);
 
     return(
 
@@ -108,9 +205,19 @@ const Home = ({navigation, route}) => {
                     </View>
 
 
+                {/* <View styles={styles.recipesWrapper}>
+                    <FlatList
+                        data={recipes[0]}
+                        renderItem={renderExplore}
+                        keyExtractor={(item, navigation) => (item.id, navigation.navigate)}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    />
+
+                </View> */}
                 <View styles={styles.recipesWrapper}>
                     <FlatList
-                        data={recipesData}
+                        data={recipes.hits}
                         renderItem={renderRecipes}
                         keyExtractor={(item, navigation) => (item.id, navigation.navigate)}
                         horizontal
@@ -118,7 +225,6 @@ const Home = ({navigation, route}) => {
                     />
 
                 </View>
-
 
 
 
@@ -134,7 +240,7 @@ const Home = ({navigation, route}) => {
                         <FlatList
                             styles={{marginTop: 10}}
                             data={exploreData}
-                            renderItem={renderRecipes}
+                            renderItem={renderExplore}
                             keyExtractor={(item, navigation) => (item.id, navigation.navigate)}
                             horizontal
                             showsHorizontalScrollIndicator={false}

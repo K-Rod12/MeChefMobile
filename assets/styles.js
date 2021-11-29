@@ -11,9 +11,29 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: "bold"
     },
-    recipeTitleUnderlay:{
+    timeIcon: {
+        marginTop: 8,
+        fontSize: 15,
+        fontWeight: "bold"
+    },
+    appleIcon: {
+        marginTop: 8,
+        fontSize: 17,
+        fontWeight: "bold"
+    },
+    recipeTitleBlur:{
         position: 'absolute',
         opacity: 0.5,
+        // blurRadius: 0.1,
+        height: 50,
+        width:170,
+        bottom: 0,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20
+    }, 
+    recipeTitleUnderlay:{
+        position: 'absolute',
+        opacity: 0.7,
         //blurRadius: 0.1,
         height: 50,
         width:170,
@@ -23,8 +43,9 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 20
     }, 
     recipeItemTitle:{
+        top: 5,
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 15,
         color: colors.white,
     },
     recipeItem: {
@@ -47,8 +68,8 @@ const styles = StyleSheet.create({
         marginBottom: 0
     },
     recipePageImage:{
-        width: 500,
-        height: 400,
+        width: "%100",
+        height: 310,
     },  
     recipeItemImage: {
         borderRadius: 20,

@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import recipesData from '../data/recipeData';
 import styles from '../assets/styles';
 import BlurOverlay from 'react-native-blur-overlay';
-import axios from 'axios';
+// import axios from 'axios';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Colors } from 'react-native/Libraries/NewAppScreen';

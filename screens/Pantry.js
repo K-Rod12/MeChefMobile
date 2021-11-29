@@ -18,8 +18,15 @@ import LoginScreen from './LoginScreen';
 const searchForIngURL = "http://mechef.zapto.org/api/searchForIngredient";
 const addToPantryURL = "http://mechef.zapto.org/api/addPantry";
 const Pantry = ({navigation, props, route}) => {
-    const [ingredientToAdd, setIngredientToAdd] = useState('');
+    // const [ingredientToAdd, setIngredientToAdd] = useState('');
     const user = route.params;
+    var search = '';
+
+    const [searchQuery, setSearchQuery] = React.useState('');
+
+    const onChangeSearch = query => setSearchQuery(query);
+
+
     const doSearch = () => {
         //POST json
         var dataToSend = {search: ingredientToAdd, quantity: '1'};
@@ -132,9 +139,10 @@ const Pantry = ({navigation, props, route}) => {
                     lightTheme={true}
                     round
                     searchIcon={{ size: 24 }}
-                    onChangeText={(text) => setIngredientToAdd(ingredientToAdd)}
-                    onClear={(text) => searchFilterFunction('')}
+                    onChangeText={onChangeSearch}
+                    onClear={onChangeSearch}
                     placeholder="Search for item..."
+                    value={searchQuery}
                     // value={search}
                     ></SearchBar>
 
