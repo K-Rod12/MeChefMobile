@@ -58,8 +58,10 @@ const RegisterScreen = ({navigation}) => {
     return(
         
         <View>
-            <ScrollView> 
-                <SafeAreaView > 
+            <ScrollView style={{
+                // marginBottom: 17,
+            }}> 
+                <View > 
                     {/* <Text style={styles.titleText} onPress={() => navigation.navigate('TabNavigator')}> Register Screen </Text>       */}
                     <Image 
                         style = {{
@@ -83,14 +85,17 @@ const RegisterScreen = ({navigation}) => {
                         </Text>
                     </View>
 
-                </SafeAreaView>
+                </View>
                 
-                <SafeAreaView>
+                <View style={{
+                    marginTop: 60,
+                    // marginBottom: 200,
+                }}>
                     <KeyboardAvoidingView behavior="position" style = {{alignItems: 'center'}}>
                         <TextInput
                             style = {{
                                 borderColor: "gray",
-                                width: 320,
+                                width: 350,
                                 borderWidth: 0.5,
                                 borderRadius: 8,
                                 padding: 10,
@@ -108,7 +113,7 @@ const RegisterScreen = ({navigation}) => {
                         <TextInput
                             style = {{
                                 borderColor: "gray",
-                                width: 320,
+                                width: 350,
                                 borderWidth: 0.5,
                                 borderRadius: 8,
                                 padding: 10,
@@ -126,7 +131,7 @@ const RegisterScreen = ({navigation}) => {
                         <TextInput
                             style = {{
                                 borderColor: "gray",
-                                width: 320,
+                                width: 350,
                                 borderWidth: 0.5,
                                 borderRadius: 8,
                                 padding: 10,
@@ -144,7 +149,7 @@ const RegisterScreen = ({navigation}) => {
                         <TextInput
                             style = {{
                                 borderColor: "gray",
-                                width: 320,
+                                width: 350,
                                 borderWidth: 0.5,
                                 borderRadius: 8,
                                 padding: 10,
@@ -163,7 +168,7 @@ const RegisterScreen = ({navigation}) => {
                         <TextInput
                             style = {{
                                 borderColor: "gray",
-                                width: 320,
+                                width: 350,
                                 borderWidth: 0.5,
                                 borderRadius: 8,
                                 padding: 10,
@@ -211,9 +216,9 @@ const RegisterScreen = ({navigation}) => {
                             // underlayColor = "#FFB9B9"
                             style = {
                                 {
-                                    marginTop: 30,
-                                    width: 320,
-                                    height: 46,
+                                    marginTop: 200,
+                                    width: 370,
+                                    height: 55,
                                     backgroundColor: '#F65D5D',
                                     borderRadius: 100,
                                     // top: 450,
@@ -229,13 +234,14 @@ const RegisterScreen = ({navigation}) => {
                                 textAlign: 'center',
                                 justifyContent: 'center',
                                 alignSelf: 'center',
-                                color: 'white'
+                                color: 'white',
+                                fontSize: 27,
                             }}>
                                 Create Account
                             </Text>
                         </TouchableOpacity>
                     </KeyboardAvoidingView>
-                </SafeAreaView>
+                </View>
             </ScrollView>
         </View>
 

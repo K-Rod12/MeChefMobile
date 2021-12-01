@@ -11,10 +11,17 @@ import styles from '../assets/styles';
 import BlurOverlay from 'react-native-blur-overlay';
 import pantryData from '../data/pantryData';
 
+const log = console.log;
+
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-const Profile = ({navigation}) => {
+const Profile = ({navigation, route}) => {
+
+    // const[user, set]]
+    var user = route.params;
+    log('\n\nProfile test')
+    log(user);
 
     return(
 
@@ -29,32 +36,16 @@ const Profile = ({navigation}) => {
             
             <Divider orientation="horizontal"/>
 
-            <View style={{width: Dimensions.get('window').width, height: 50, backgroundColor:'white'}} on>
-                <TouchableOpacity style={{height: 50}} onPress = {() => navigation.navigate('PersonalInformation')}>
-                    <Text style ={{fontWeight: 'bold', fontSize: 24, marginLeft:20, marginTop: 10}}>
-                        Personal Information
-                    </Text>
-                </TouchableOpacity>
-                
-            </View>
             <Divider orientation="horizontal"/>
             <View style={{width: Dimensions.get('window').width, height: 50, backgroundColor:'white'}}>
-                <TouchableOpacity style={{height: 50}} onPress = {() => navigation.navigate('ResetPassword')}>
+                <TouchableOpacity style={{height: 50}} onPress = {() => navigation.navigate('EmailVerification')}>
                     <Text style ={{fontWeight: 'bold', fontSize: 24, marginLeft:20, marginTop: 10}}>
                         Reset Password
                     </Text>
                 </TouchableOpacity>
                 
             </View>
-            <Divider orientation="horizontal"/>
-            <View style={{width: Dimensions.get('window').width, height: 50, backgroundColor:'white'}}>
-                <TouchableOpacity style={{height: 50}} onPress = {() => navigation.navigate('AddRecipe')}>
-                    <Text style ={{fontWeight: 'bold', fontSize: 24, marginLeft:20, marginTop: 10}}>
-                        Add Recipe
-                    </Text>
-                </TouchableOpacity>
-                
-            </View>
+
             <Divider orientation="horizontal"/>
             <View style={{width: Dimensions.get('window').width, height: 50, backgroundColor:'white'}}>
                 <TouchableOpacity style={{height: 50}} onPress = {() => navigation.navigate('LoginScreen')}>

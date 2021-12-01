@@ -16,34 +16,48 @@ import BlurOverlay,{closeOverlay,openOverlay} from 'react-native-blur-overlay'
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import Pantry from './Pantry';
 
 const log = console.log;
 
 const Home = ({navigation, route}) => {
-    const user = route.params;
-    var count = Object.keys(user[0].Pantry.Ingredient_List).length;
+    var [user, setUser] = useState([]);
+    // user = setUser(route.params);
+    user = route.params;
+    var count = Object.keys(user[0].Ingredient_List).length;
     const key = '&app_id=b3ff7aac&app_key=5ae74af09f6c48e7e1f444dcd524091a&imageSize=LARGE&time=1-50&random=false'
     var [recipes, setRecipes] = useState([]);
+    var [appleRecipes, setAppleRecipes] = useState([]);
+    var [exploreRecipes, setExploreRecipes] = useState([]);
+    var [isRecipes, setIsRecipe] = useState(false);
 
+    log('\n\ntest2\n\n')
+    log(user);
     
-    // const testURL = 'https://api.spoonacular.com/recipes/findByIngredients?ingredients=apples,+flour,+sugar&number=2&apiKey=5e11b97982854510823bc74ed70c95ba';
-    // var testURL = 'https://api.edamam.com/api/recipes/v2?type=public&q=chickens&app_id=b3ff7aac&app_key=5ae74af09f6c48e7e1f444dcd524091a&health=alcohol-cocktail&imageSize=REGULAR&random=false';
-    var URL = 'https://api.edamam.com/api/recipes/v2?type=public&q='; //Bananas%20Apple&app_id=b3ff7aac&app_key=5ae74af09f6c48e7e1f444dcd524091a&health=alcohol-cocktail&imageSize=REGULAR&random=false';
-    
+    const url = 'http://mechef.zapto.org/api/login';
+    var testURL = 'https://api.edamam.com/api/recipes/v2?type=public&q=apple&app_id=b3ff7aac&app_key=5ae74af09f6c48e7e1f444dcd524091a&&time=1-50&imageSize=LARGE&random=false';
+    var exploreURL = 'https://api.edamam.com/api/recipes/v2?type=public&q=a&app_id=b3ff7aac&app_key=5ae74af09f6c48e7e1f444dcd524091a&time=1-50&ingr=10&imageSize=LARGE&random=true';
+    var recipeURL = 'https://api.edamam.com/api/recipes/v2?type=public&q='; //Bananas%20Apple&app_id=b3ff7aac&app_key=5ae74af09f6c48e7e1f444dcd524091a&health=alcohol-cocktail&imageSize=REGULAR&random=false';
+
+    let c = [];
+
+    // log(isRecipes);
+
+    // if(count != 0)
     for(var i = 0; i < count; i++ ){
         if(i < count - 1 ){
-            URL += user[0].Pantry.Ingredient_List[i].Name + '%20';
+            recipeURL += user[0].Ingredient_List[i].Name.replace(/ /g, '%20') + '%20';
         }else{
-            URL += user[0].Pantry.Ingredient_List[i].Name;
+            recipeURL += user[0].Ingredient_List[i].Name.replace(/ /g, '%20');
         }
     }
+    recipeURL += key;
+    // log(recipeURL)
     
-    URL += key;
-    
-    log(URL);
 
     useEffect(() => {
-        fetch(URL, {
+
+        fetch(recipeURL, {
             method: 'GET', //Request Type
             // body: JSON.stringify(dataToSend), //post body
             headers: {
@@ -58,16 +72,7 @@ const Home = ({navigation, route}) => {
                 if (!responseJson.error)
                 {
                     // recipes = setRecipes(responseJson);
-                    recipes = setRecipes(responseJson);
-                    log('\n\nRecipes\n\n')
-                    // log(recipes)
-                    // log(recipes.hits[0].recipe.label);
-
-
-                    //   navigation.navigate('TabNavigator', {
-                    //       screen: 'Home',
-                    //       params: user
-                    //   });
+                    recipes = setRecipes(responseJson.hits);
                 }
             })
             //If response is not in json then in error
@@ -76,13 +81,92 @@ const Home = ({navigation, route}) => {
             console.error(error);
             // navigation.navigate('LoginScreen');
             });
-    }, [])
+            // fetch(testURL, {
+            //     method: 'GET', //Request Type
+            //     // body: JSON.stringify(dataToSend), //post body
+            //     headers: {
+            //     //Header Defination
+            //     'Accept': 
+            //         'application/json',
+            //     },
+            // })
+            //     .then((response) => response.json())
+            //     //If response is in json then in success
+            //     .then((responseJson) => {
+            //         if (!responseJson.error)
+            //         {
+            //             // recipes = setRecipes(responseJson);
+            //             appleRecipes = setAppleRecipes(responseJson.hits);
+            //             log('\n\nRecipes\n\n')
+    
+    
+            //         }
+            //     })
+            //     //If response is not in json then in error
+            //     .catch((error) => {
+            //     //alert(JSON.stringify(error));
+            //     console.error(error);
+            //     // navigation.navigate('LoginScreen');
+            //     });
+            fetch(exploreURL, {
+                method: 'GET', //Request Type
+                // body: JSON.stringify(dataToSend), //post body
+                headers: {
+                //Header Defination
+                'Accept': 
+                    'application/json',
+                },
+            })
+                .then((response) => response.json())
+                //If response is in json then in success
+                .then((responseJson) => {
+                    if (!responseJson.error)
+                    {
+                        // recipes = setRecipes(responseJson);
+                        exploreRecipes = setExploreRecipes(responseJson.hits);
+                    }
+                })
+                //If response is not in json then in error
+                .catch((error) => {
+                //alert(JSON.stringify(error));
+                console.error(error);
+                // navigation.navigate('LoginScreen');
+                });
+                var dataToSend = {login: 'Ken', password: 'Pooped#12'};
+                fetch(url, {
+                    method: 'POST', //Request Type
+                    body: JSON.stringify(dataToSend), //post body
+                    headers: {
+                      //Header Defination
+                      'Content-Type': 
+                        'application/json',
+                    },
+                  })
+                    .then((response) => response.json())
+                    //If response is in json then in success
+                    .then((responseJson) => {
+                        if (!responseJson.error)
+                        {
+                            user = setUser(responseJson);
+                            log('Login Test');
+                              // navigation.navigate('TabNavigator', user);
+                        }
+                        //alert(JSON.stringify(responseJson));
+                        //console.log(responseJson);
+                        //console.log(user[0].Pantry.Ingredient_List[0]); // this line works sometimes
+                        //console.log(user.Pantry[0].Ingredient_List[0]);
+                        // navigation.navigate('TabNavigator');
+                    })
+                    //If response is not in json then in error
+                    .catch((error) => {
+                      //alert(JSON.stringify(error));
+                      console.error(error);
+                     // navigation.navigate('LoginScreen');
+                    });
 
-    // getRecipe();
-
+            }, [])
+                
     const renderRecipes = ({item}) => {
-
-        //log(item)
 
         return(
     
@@ -92,12 +176,7 @@ const Home = ({navigation, route}) => {
                 style={styles.recipeItem}
                 imageStyle={styles.recipeItemImage}
                 >
-
-                <BlurOverlay
-                    style={styles.recipeTitleBlur}
-                    customStyles={{alignItems: 'center', justifyContent: 'center'}}
-                    blurStyle="dark"
-                />                
+              
                     <View style={styles.recipeTitleUnderlay}></View>
                     
                     <View>
@@ -110,9 +189,6 @@ const Home = ({navigation, route}) => {
     };
 
     const renderExplore = ({item}) => {
-
-        //log(item)
-
         return(
     
             <TouchableOpacity onPress={() => navigation.navigate('Recipe', item) } > 
@@ -159,100 +235,168 @@ const Home = ({navigation, route}) => {
 
     };
 
-    // for(var i = 0; i < 10; i++){
-    //     log(recipes.hits[i].recipe.label);
-    // }
+// for(var i = 0; i < 3; i++){
+//     c.push(appleRecipes[i]);
+//     c.push(recipes[i]);
+// }
+// log('\n\nUser\n\n')
+// log(user);
 
-    // log(recipes);
+    if(count == 0){
+        return(
+                <View style={styles.container}>
+        
+                    {/*Header */}
+                    <ScrollView>
+                        <View style={{
+                            marginTop: 40
+                        }}
+                        >
+                            <View style={{
+                                flexDirection: 'row'
+                            }}>
+                                <Text style={styles.titleText} onPress={() => navigation.navigate('Pantry', user)}> Your Pantry </Text>
+                                <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/>
+                            </View>
+                            
+                            <View style={{
+                                width: 370,
+                                height: 60,
+                                backgroundColor: colors.pink,
+                                borderRadius: 15,
+                                alignSelf: 'center',
+                                alignItems: 'center',
+                                alignContent: 'center',
+                                textAlign: 'center'
+                            }}>
+                                <Text style={{
+                                    marginTop: 5,
+                                    width: 360,
+                                    height: 60,
+                                    fontSize: 20,
+                                    color: "white",
+                                    textAlign: 'center',
+                                    alignSelf: 'center',
+                                    alignContent: 'center',
+                                    alignItems: 'center',
+                                    
+                                }}
+                                onPress={() => navigation.navigate("Pantry", user)}
+                                >
+                                    Click Here to Add Your Ingredients to your Pantry!
+                                </Text>
 
-    return(
-
-        <View style={styles.container}>
-
-            {/*Header */}
-            <ScrollView>
-
-                <View style={{
-                    marginTop: 40
-                }}
-                >
+                            </View>
+                        </View>
+                    
+        
+                        <View style={{
+                                flexDirection: 'row'
+                            }}>
+                                <Text style={styles.titleText} onPress={() => navigation.navigate('Explore')}> Explore </Text>
+                                <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/>
+                        </View>
+        
+        
+                        <View styles={styles.recipesWrapper}>
+                                <FlatList
+                                    styles={{marginTop: 10}}
+                                    data={exploreRecipes}
+                                    renderItem={renderRecipes}
+                                    keyExtractor={(item, navigation) => (item, navigation.navigate)}
+                                    horizontal
+                                    showsHorizontalScrollIndicator={false}
+                                />
+        
+                        </View>
+        
+        
+                    </ScrollView>
+                </View>
+        
+            );
+    }else{
+        return(
+            <View style={styles.container}>
+    
+                {/*Header */}
+                <ScrollView>
+    
                     <View style={{
-                        flexDirection: 'row'
-                    }}>
-                        <Text style={styles.titleText} onPress={() => navigation.navigate('Pantry', user)}> Your Pantry </Text>
-                        <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/>
-                    </View>
-
-                    <FlatList 
-                    data={user[0].Pantry.Ingredient_List}
-                    renderItem={renderPantry}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    style={{
-                        marginLeft: 5,
-                        marginTop: 10,
-                        marginBottom: 10
-                    }}> 
-                    </FlatList>
-                </View>
-                
-
-                <View style={{
-                        flexDirection: 'row'
-                    }}>
-                        <Text style={styles.titleText} onPress={() => navigation.navigate('Recipes')}> Your Recipes </Text>
-                        <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/>
-                    </View>
-
-
-                {/* <View styles={styles.recipesWrapper}>
-                    <FlatList
-                        data={recipes[0]}
-                        renderItem={renderExplore}
-                        keyExtractor={(item, navigation) => (item.id, navigation.navigate)}
+                        marginTop: 40
+                    }}
+                    >
+                        <View style={{
+                            flexDirection: 'row'
+                        }}>
+                            <Text style={styles.titleText} onPress={() => navigation.navigate('Pantry', user)}> Your Pantry </Text>
+                            <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/>
+                        </View>
+    
+                        <FlatList 
+                        data={user[0].Ingredient_List}
+                        renderItem={renderPantry}
                         horizontal
+                        // initialScrollIndex={count - 1}
+                        // inverted={(count > 3) ? true : false}
                         showsHorizontalScrollIndicator={false}
-                    />
-
-                </View> */}
-                <View styles={styles.recipesWrapper}>
-                    <FlatList
-                        data={recipes.hits}
-                        renderItem={renderRecipes}
-                        keyExtractor={(item, navigation) => (item.id, navigation.navigate)}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                    />
-
-                </View>
-
-
-
-                <View style={{
-                        flexDirection: 'row'
-                    }}>
-                        <Text style={styles.titleText} onPress={() => navigation.navigate('Explore')}> Explore </Text>
-                        <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/>
-                </View>
-
-
-                <View styles={styles.recipesWrapper}>
+                        style={{
+                            marginLeft: 5,
+                            marginTop: 10,
+                            marginBottom: 10
+                        }}> 
+                        </FlatList>
+                    </View>
+                    
+    
+                    <View style={{
+                            flexDirection: 'row'
+                        }}>
+                            <Text style={styles.titleText} onPress={() => navigation.navigate('Recipes', recipes )}> Your Recipes </Text>
+                            <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/>
+                    </View>
+                    
+                    <View styles={styles.recipesWrapper}>
                         <FlatList
-                            styles={{marginTop: 10}}
-                            data={exploreData}
-                            renderItem={renderExplore}
-                            keyExtractor={(item, navigation) => (item.id, navigation.navigate)}
+                            data={recipes} 
+                            renderItem={renderRecipes}
+                            keyExtractor={(item, navigation) => (item.Ingredient_List, navigation.navigate)}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                         />
+    
+                    </View>
+    
+    
+    
+                    <View style={{
+                            flexDirection: 'row'
+                        }}>
+                            <Text style={styles.titleText} onPress={() => navigation.navigate('Explore')}> Explore </Text>
+                            <MaterialIcons style={styles.titleIcon} name="arrow-forward-ios"/>
+                    </View>
+    
+    
+                    <View styles={styles.recipesWrapper}>
+                            <FlatList
+                                styles={{marginTop: 10}}
+                                data={exploreRecipes}
+                                renderItem={renderRecipes}
+                                keyExtractor={(item, navigation) => (item, navigation.navigate)}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                            />
+    
+                    </View>
+    
+    
+                </ScrollView>
+            </View>
+    
+        );
+    }
 
-                </View>
-
-
-            </ScrollView>
-        </View>
-
-    );
+    
 
 };
 

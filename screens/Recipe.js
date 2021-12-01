@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import Navigation from '../App';
 import React from 'react';
-import {Image, View, Linking, Text, Button, StyleSheet, ImageBackground, ImageBackgroundBase} from 'react-native';
+import {Image, LogBox, View, Linking, Text, Button, StyleSheet, ImageBackground, ImageBackgroundBase} from 'react-native';
 import colors from '../assets/colors/colors'
 import { FlatList, ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -19,6 +19,10 @@ import { color } from 'react-native-reanimated';
 import { gray, grey } from 'chalk';
 
 const log = console.log;
+
+LogBox.ignoreAllLogs();
+console.reportErrorsAsExceptions = false;
+
 // import { Colors } from 'react-native/Libraries/NewAppScreen';
 // import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 const Recipe = ({route}) => {
@@ -102,7 +106,7 @@ const Recipe = ({route}) => {
                         width: 350,
                         backgroundColor: "#EBE9E9",
                         borderRadius: 15,
-
+                        
                     }}>
 
                         <FlatList
@@ -114,11 +118,11 @@ const Recipe = ({route}) => {
                             renderItem={renderRecipe}
                             // keyExtractor={(item, navigation) => (item.id, navigation.navigate)}
                             showsHorizontalScrollIndicator={false}
-                        />
+                            />
 
                     </View>
-
                 </ScrollView>
+
 
 
                 <TouchableOpacity style={{
@@ -126,11 +130,12 @@ const Recipe = ({route}) => {
                     alignContent: 'center',
                     alignItems: 'center',
                     height: 100,
-                    width: '%100',
+                    width: '100%',
                     borderRadius: 10,
                     backgroundColor: colors.pink,
                 }}
-                onPress={ ()=>loadInBrowser(recipe.recipe.url)}>
+                onPress={ ()=>loadInBrowser(recipe.recipe.url)}
+                >
                     <Text style={{
                         marginTop: 15,
                         fontSize: 36,

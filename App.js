@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, LogBox} from 'react-native';
 
 import Home from './screens/Home';
 import Explore from './screens/Explore';
@@ -24,15 +24,19 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import WelcomeScreen from './screens/WelcomeScreen';
 import { TransitionSpecs } from '@react-navigation/stack';
+import { disable } from 'debug';
 
 Entypo.loadFont();
 MaterialCommunityIcons.loadFont();
+LogBox.ignoreAllLogs();
+console.reportErrorsAsExceptions = false;
 
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const Auth = () => {
+  
   // Stack Navigator for Login and Sign up Screen
   return (
     <Stack.Navigator initialRouteName="WelcomeScreen">
@@ -122,26 +126,37 @@ const TabNavigator = ({route}) => {
 };
 
 const config = {
-  animation: 'time',
+  animation: 'timing',
+  config: {
+    duration: 500,
+    // easing: 50,
+  },
+};
+
+const cardConfig = {
+  animation: 'timing',
+  config: {
+    duration: 500,
+  },
+};
+
+const closeCardConfig = {
+  animation: 'spring',
   config: {
     stiffness: 1000,
     damping: 50,
     mass: 3,
-    overshootClamping: false,
-    restDisplacementThreshold: 0.01,
-    restSpeedThreshold: 0.01,
+    overshootClamping: true,
+    restDisplacementThreshold: 1.,
+    restSpeedThreshold: 1.,
   },
 };
 
 const closeConfig = {
-  animation: 'spring',
+  animation: 'timing',
   config: {
-    stiffness: 1000,
-    damping: 500,
-    mass: 3,
-    overshootClamping: true,
-    restDisplacementThreshold: 1.,
-    restSpeedThreshold: 1.,
+    duration: 500,
+    // easing: 50,
   },
 };
 
@@ -170,10 +185,10 @@ const App = () => {
             options={{
               headerShown: false,
               gestureEnabled: true,
-              gestureDirection: "horizontal",
+              gestureDirection: "horizontal-inverted",
               transitionSpec:{
-                open: TransitionSpecs.RevealFromBottomAndroid,
-                close: TransitionSpecs.RevealFromBottomAndroid
+                open: config,
+                close: closeConfig
               }
             }}
             // screenOptions={{
@@ -215,8 +230,8 @@ const App = () => {
             transitionSpec:{
               // open: TransitionSpecs.RevealFromBottomAndroidSpec,
               // close: TransitionSpecs.RevealFromBottomAndroidSpec
-              open: config,
-              close: closeConfig
+              open: cardConfig,
+              close: closeCardConfig
             }
           }}
 

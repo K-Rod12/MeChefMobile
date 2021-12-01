@@ -63,7 +63,7 @@ const EmailVerification = ({navigation}) => {
                 >
                 </TextInput>
                 <TouchableOpacity
-                        onPress = {() => navigation.navigate('ResetPassword')}
+                        onPress = {() => navigation.navigate('WelcomeScreen')}
                         // underlayColor = "#FFB9B9"
                         style = {
                             {

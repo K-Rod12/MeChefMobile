@@ -15,6 +15,8 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const url = 'http://mechef.zapto.org/api/login';
 
+const log = console.log;
+
 const LoginScreen = ({navigation}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -53,10 +55,12 @@ const LoginScreen = ({navigation}) => {
               if (!responseJson.error)
               {
                 user = responseJson;
+                    // navigation.navigate('Home')
                     navigation.navigate('TabNavigator', {
                         screen: 'Home',
                         params: user
-                    });
+                    }
+                    );
               }
               //alert(JSON.stringify(responseJson));
               //console.log(responseJson);
@@ -200,6 +204,7 @@ const LoginScreen = ({navigation}) => {
                         }
                     >
                         <Text style = {{
+                            marginTop: 10,
                             textAlign: 'center',
                             justifyContent: 'center',
                             alignSelf: 'center',

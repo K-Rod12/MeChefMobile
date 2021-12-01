@@ -10,9 +10,15 @@ import styles from '../assets/styles';
 // import renderRecipes from '../data/renderRecipes';
 
 import Feather from 'react-native-vector-icons/Feather';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const Recipes = ({navigation, routes}) => {
+const log = console.log;
+
+const Recipes = ({navigation, route}) => {
+
+    const recipes = route.params;
+    log('your recipes')
+    log(recipes);
 
     const renderRecipes = ({item}) => {
 
@@ -20,16 +26,16 @@ const Recipes = ({navigation, routes}) => {
     
             <TouchableOpacity onPress={() => navigation.navigate('Recipe', item) } > 
                 <ImageBackground
-                source ={item.image}
+                source ={{uri: item.recipe.image}}
                 style={styles.recipeItem}
                 imageStyle={styles.recipeItemImage}
                 >
-                
-                    <View style={styles.recipeTitleUnderlay}>
+            
+                    <View style={styles.recipeTitleUnderlay}></View>
+                    
+                    <View>
+                        <Text style={styles.recipeItemTitle} numberOfLines={2} >{item.recipe.label}</Text>
                     </View>
-    
-                    <Text style={styles.recipeItemTitle}>{item.title}</Text>
-    
     
                 </ImageBackground>
             </TouchableOpacity>
@@ -41,16 +47,26 @@ const Recipes = ({navigation, routes}) => {
         <View>
 
             <View style={{marginTop:40, marginBottom:10}}>
-                <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 32}}> Your Recipes</Text>
+                <Text style={{
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    fontSize: 32
+                    }}> 
+                        Your Recipes
+                    </Text>
             </View>
 
-            <ScrollView> 
+            <ScrollView style={{
+                alignContent: 'center',
+                alignSelf: 'center',
+                alignSelf: 'center',
+            }}> 
 
 
                 <View styles={styles.recipesScreenWrapper}>
                         <FlatList 
                             numColumns='2'
-                            data={recipesData}
+                            data={recipes}
                             renderItem={renderRecipes}
                             keyExtractor={(item) => item.id}
                             showsHorizontalScrollIndicator={false}

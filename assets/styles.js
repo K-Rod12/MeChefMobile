@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import colors from './colors/colors'
 
 const styles = StyleSheet.create({
@@ -59,6 +59,50 @@ const styles = StyleSheet.create({
         marginRight: 6,
         marginBottom: 10,
     },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 20,
+      },
+    modalView: {
+        width: Dimensions.get('window').width - 50,
+        height: 230,//Dimensions.get('window').height - 200,
+        // margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        // padding: 35,
+        justifyContent: 'center',
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    },
+    button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2
+    },
+    buttonOpen: {
+        backgroundColor: "#FFB9B9",
+    },
+    buttonClose: {
+        backgroundColor: "#2196F3",
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center"
+    },
     recipesWrapper:{
         backgroundColor: colors.pink,
         marginTop: 10 
@@ -68,7 +112,7 @@ const styles = StyleSheet.create({
         marginBottom: 0
     },
     recipePageImage:{
-        width: "%100",
+        width: "100%",
         height: 310,
     },  
     recipeItemImage: {
